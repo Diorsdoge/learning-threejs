@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>First-scene</title>
+<script type="text/javascript" src="../libs/three.js"></script>
+<script type="text/javascript" src="../libs/jquery-2.1.4.min.js"></script>
+<style type="'text/css'">
+	body{
+		margin: 0;
+		overflow: hidden;
+	}
+</style>
+</head>
+<body>
+
+<!-- div里面包裹着输出-->
+<div id="WebGL-output">
+	
+</div>
+
+<!-- 用js语句来执行我们的three.js例子 -->
+<script type="text/javascript">
+
+	$(function () {
+		var scene = new THREE.Scene();
+
+		var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+		var renderer = new THREE.WebGLRenderer();
+		renderer.setClearColor(0xEEEEEE, 1.0);
+		renderer.setSize(window.innerWidth, window.innerHeight);
+		//告诉渲染器需要阴影
+		renderer.shadowMapEnabled = true;
+
+		var planeGeometry = new THREE.PlaneGeometry(60, 20);
+		//改变各个物体的材质，使其对光源产生反应
+		//three.js里面有两种材质对光源产生反应：MeshLambertMaterial和MeshPhongMaterial
+		//请尝试一下二者的区别
+		var planeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
+		var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+		//设置各个物体能够产生阴影
+		plane.receiveShadow = true;
+
+		plane.rotation.x = -0.5 * Math.PI;
+		plane.position.x = 15;
+		plane.position.y = 0;
+		plane.position.z = 0;
+
+		scene.add(plane);
+
+		var cubeGeometry = new THREE.BoxGeometry(4, 4, 4);
+		var cubeMaterial = new THREE.MeshLambertMaterial({color: 0xff0000 });
+		var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+		cube.castShadow = true;
+
+		cube.position.x = -4;
+		cube.position.y = 3;
+		cube.position.z = 0;
+
+		scene.add(cube);
+
+		var sphereGeometry = new THREE.SphereGeometry(4, 20, 20);
+		var sphereMaterial = new THREE.MeshLambertMaterial({color: 0x7777ff});
+		var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+		sphere.castShadow = true;
+
+		sphere.position.x = 20;
+		sphere.position.y = 4;
+		sphere.position.z = 2;
+
+		scene.add(sphere);
+
+		camera.position.x = -30;
+		camera.position.y = 40;
+		camera.position.z = 30;
+		camera.lookAt(scene.position);
+
+		//添加光源
+		var spotLight = new THREE.SpotLight( 0xffffff );
+		spotLight.position.set( -40, 60, -10);
+		spotLight.castShadow = true;
+		scene.add( spotLight );
+
+		$('#WebGL-output').append(renderer.domElement);
+		renderer.render(scene, camera);
+	});
+</script>
+
+	
+</body>
+</html>
