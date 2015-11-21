@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>basic-scene</title>
+	<title>fog-scene</title>
 <script type="text/javascript" src="../libs/three.js"></script>
 <script type="text/javascript" src="../libs/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../libs/stats.js"></script>
@@ -37,6 +37,9 @@
 		var stats = initStats();
 
 		scene = new THREE.Scene();
+		//scene.fog = new THREE.FogExp2(0xffffff, 0.015);
+		//白色雾化效果，0.015近处属性值,100远处属性值
+		scene.fog = new THREE.Fog(0xffffff, 0.015, 100);
 
 
 		camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
